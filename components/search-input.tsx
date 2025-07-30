@@ -1,0 +1,47 @@
+"use client";
+
+import { SearchIcon } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import qs from "query-string";
+import { useEffect, useState } from "react";
+
+import { Input } from "@/components/ui/input";
+import { useDebounce } from "@/hooks/use-debounce";
+
+export const SearchInput = () => {
+  const [value, setValue] = useState("");
+  const debouncedValue = useDebounce(value);
+
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const currentCategoryId = searchParams.get("categoryId");
+
+  useEffect(() => {
+    const url = qs.stringifyUrl(
+      {
+        url: pathname,
+        query: {
+          categoryId: currentCategoryId,
+          title: debouncedValue,
+        },
+      },
+      { skipEmptyString: true, skipNull: true },
+    );
+
+    router.push(url);
+  }, [debouncedValue, currentCategoryId, router, pathname]);
+
+  return (
+    <div className="relative">
+      <SearchIcon className="h-4 w-4 text-black" />
+      <Input
+        onChange={(e) => setValue(e.target.value)}
+        value={value}
+        className="w-full rounded-full bg-slate-100 pl-9 focus-visible:ring-slate-200 md:w-[300px]"
+        placeholder="Search courses..."
+      />
+    </div>
+  );
+};

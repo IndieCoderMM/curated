@@ -1,10 +1,26 @@
 <p align="center">
-  <img src="./public/logo.png" alt="Curated Logo" width="200">
+  <a href="https://curat-ed.vercel.app">
+    <picture>
+      <source srcset=".github/assets/logo-dark.png" media="(prefers-color-scheme: dark)">
+      <source srcset=".github/assets/logo-light.png" media="(prefers-color-scheme: light)">
+      <img src=".github/assets/logo-light.png" alt="curated logo">
+    </picture>
+  </a>
 </p>
 
-# Curated: A Learning Platform for Self-Taught Learners
+<p align="center">Education Platform for Self-taught Learners</p>
 
-**Curated** is a learning platform built for self-taught learners. It helps you organize YouTube videos into focused playlists, track your progress, and stay motivated by learning alongside others.
+<p align="center">
+  <a href="https://github.com/your- username/curated">
+    <img src="https://img.shields.io/github/last- commit/IndieCoderMM/curated" alt="Last Commit">
+  </a>
+  <a href="https://github.com/your- username/curated/graphs/contributors">
+    <img src="https://img.shields. io/github/contributors/IndieCoderMM/curated" alt="Contributors">
+  </a>
+  <a href="https://github.com/your- username/curated/blob/main/LICENSE">
+    <img src="https://img.shields. io/github/license/IndieCoderMM/curated" alt="License">
+  </a>
+</p>
 
 ## 🌟 Features
 

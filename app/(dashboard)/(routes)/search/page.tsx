@@ -1,10 +1,10 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
-import { db } from "@/lib/db";
-import { SearchInput } from "@/components/search-input";
 import { getCourses } from "@/actions/get-courses";
 import { CoursesList } from "@/components/courses-list";
+import { SearchInput } from "@/components/search-input";
+import { db } from "@/lib/db";
 
 import { Categories } from "./_components/categories";
 
@@ -35,10 +35,10 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
 
   return (
     <>
-      <div className="px-6 pt-6 md:hidden md:mb-0 block">
+      <div className="block px-6 pt-6 md:mb-0 md:hidden">
         <SearchInput />
       </div>
-      <div className="p-6 space-y-4">
+      <div className="space-y-4 p-6">
         <Categories items={categories} />
         <CoursesList items={courses} />
       </div>
@@ -47,4 +47,3 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
 };
 
 export default SearchPage;
-

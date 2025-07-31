@@ -13,7 +13,7 @@ const guestRoutes = [
   },
   {
     icon: Compass,
-    label: "Search",
+    label: "Explore",
     href: "/search",
   },
 ];
@@ -51,4 +51,3 @@ export const SidebarRoutes = () => {
     </div>
   );
 };
-

@@ -8,7 +8,7 @@ interface CourseProgressProps {
 }
 
 const colorByVariant = {
-  default: "text-sky-700",
+  default: "text-accent-foreground",
   success: "text-emerald-700",
 };
 
@@ -37,4 +37,3 @@ export const CourseProgress = ({
     </div>
   );
 };
-

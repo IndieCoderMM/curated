@@ -60,7 +60,7 @@ export const columns: ColumnDef<Course>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Published
+          Status
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -83,14 +83,17 @@ export const columns: ColumnDef<Course>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-4 w-8 p-0">
+            <Button
+              variant="ghost"
+              className="flex h-7 w-7 items-center justify-center p-0"
+            >
               <span className="sr-only">Open actions menu</span>
-              <MoreHorizontal className="h-4 w-4" />
+              <MoreHorizontal className="h-5 w-5" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <Link href={`/teacher/courses/${id}`}>
-              <DropdownMenuItem className="flex items-center">
+              <DropdownMenuItem className="flex items-center justify-center">
                 <Pencil className="mr-2 h-4 w-4" />
                 Edit
               </DropdownMenuItem>

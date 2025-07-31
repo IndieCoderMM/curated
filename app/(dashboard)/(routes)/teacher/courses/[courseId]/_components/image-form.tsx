@@ -14,28 +14,25 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import YouTubeEmbed from "@/components/youtube-embed";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Chapter } from "@prisma/client";
-import { Pencil, PlusCircle, Video } from "lucide-react";
+import { Course } from "@prisma/client";
+import { ImageIcon, Pencil, PlusCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-interface ChapterVideoFormProps {
-  initialData: Chapter;
+interface CourseImageFormProps {
+  initialData: Course;
   courseId: string;
-  chapterId: string;
 }
 
 const formSchema = z.object({
-  videoUrl: z.string().min(1),
+  imageUrl: z.string().min(1),
 });
 
-export const ChapterVideoForm = ({
+export const CourseImageForm = ({
   initialData,
   courseId,
-  chapterId,
-}: ChapterVideoFormProps) => {
+}: CourseImageFormProps) => {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -48,31 +45,28 @@ export const ChapterVideoForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(
-        `/api/courses/${courseId}/chapters/${chapterId}`,
-        values,
-      );
-      toast.success("Video updated successfully");
+      await axios.patch(`/api/courses/${courseId}`, values);
+      toast.success("Course image updated successfully");
       toggleEdit();
       router.refresh();
     } catch {
-      toast.error("Failed to update video");
+      toast.error("Failed to update course");
     }
   };
 
   return (
     <div className="mt-6 rounded-md border bg-slate-100 p-4">
       <div className="flex items-center justify-between font-medium">
-        <span>Video</span>
+        <span>Cover Image</span>
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing && <>Cancel</>}
-          {!isEditing && !initialData.videoUrl && (
+          {!isEditing && !initialData.imageUrl && (
             <>
               <PlusCircle className="mr-2 h-4 w-4" />
-              Add Video
+              Add Cover Image
             </>
           )}
-          {!isEditing && initialData.videoUrl && (
+          {!isEditing && initialData.imageUrl && (
             <>
               <Pencil className="mr-2 h-4 w-4" />
               Edit
@@ -81,14 +75,16 @@ export const ChapterVideoForm = ({
         </Button>
       </div>
       {!isEditing ? (
-        !initialData.videoUrl ? (
+        !initialData.imageUrl ? (
           <div className="flex h-60 items-center justify-center rounded-md bg-slate-200">
-            <Video className="h-10 w-10 text-slate-500" />
+            <ImageIcon className="h-10 w-10 text-slate-500" />
           </div>
         ) : (
-          <div className="aspect-video w-full">
-            <YouTubeEmbed url={initialData.videoUrl} />
-          </div>
+          <img
+            src={initialData.imageUrl}
+            alt="Course Cover"
+            className="aspect-video h-auto w-full rounded-md object-cover"
+          />
         )
       ) : (
         <Form {...form}>
@@ -98,14 +94,14 @@ export const ChapterVideoForm = ({
           >
             <FormField
               control={form.control}
-              name="videoUrl"
+              name="imageUrl"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
                     <Input
                       {...field}
                       disabled={isSubmitting}
-                      placeholder="Enter video URL"
+                      placeholder="Enter image URL"
                     />
                   </FormControl>
                   <FormMessage />
@@ -120,14 +116,12 @@ export const ChapterVideoForm = ({
           </form>
         </Form>
       )}
-      {initialData.videoUrl && !isEditing && (
-        <span className="mt-2 text-xs text-muted-foreground">
-          Videos may take a few minutes to process. Refresh the page if the
-          video does not appear.
-        </span>
-      )}
+      <span className="mt-2 text-xs text-muted-foreground">
+        Optimal image ratio is 16:9. Recommended size is at least 1280x720px for
+        best quality.
+      </span>
     </div>
   );
 };
 
-export default ChapterVideoForm;
+export default CourseImageForm;

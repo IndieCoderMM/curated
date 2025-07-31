@@ -34,12 +34,12 @@ export const SearchInput = () => {
   }, [debouncedValue, currentCategoryId, router, pathname]);
 
   return (
-    <div className="relative">
+    <div className="flex items-center rounded-full bg-slate-100 pl-4 ring ring-transparent focus-within:ring-accent">
       <SearchIcon className="h-4 w-4 text-black" />
       <Input
         onChange={(e) => setValue(e.target.value)}
         value={value}
-        className="w-full rounded-full bg-slate-100 pl-9 focus-visible:ring-slate-200 md:w-[300px]"
+        className="w-full border-0 bg-transparent outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 md:w-[300px]"
         placeholder="Search courses..."
       />
     </div>

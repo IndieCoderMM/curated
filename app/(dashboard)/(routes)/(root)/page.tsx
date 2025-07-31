@@ -19,7 +19,7 @@ export default async function Dashboard() {
     await getDashboardCourses(userId);
 
   return (
-    <div className="space-y-4 p-6">
+    <div className="space-y-4 px-6 py-4">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <InfoCard
           icon={Clock}

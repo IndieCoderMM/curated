@@ -1,16 +1,14 @@
 import { BookOpen } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 import { IconBadge } from "@/components/icon-badge";
 import { formatPrice } from "@/lib/format";
-import { getYouTubeThumbnail } from "@/lib/utils";
 import { CourseProgress } from "./course-progress";
 
 interface CourseCardProps {
   id: string;
   title: string;
-  videoUrl: string;
+  imageUrl?: string;
   chaptersLength: number;
   price: number;
   progress: number | null;
@@ -20,19 +18,18 @@ interface CourseCardProps {
 export const CourseCard = ({
   id,
   title,
-  videoUrl,
+  imageUrl,
   chaptersLength,
   price,
   progress,
   category,
 }: CourseCardProps) => {
-  const imageUrl = getYouTubeThumbnail(videoUrl);
   return (
     <Link href={`/courses/${id}`}>
       <div className="group h-full overflow-hidden rounded-lg border p-3 transition hover:shadow-sm">
         <div className="relative aspect-video w-full overflow-hidden rounded-md">
           {imageUrl ? (
-            <Image fill className="object-cover" alt={title} src={imageUrl} />
+            <img className="w-full object-cover" alt={title} src={imageUrl} />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center bg-slate-200">
               <IconBadge icon={BookOpen} size="lg" />
@@ -40,7 +37,7 @@ export const CourseCard = ({
           )}
         </div>
         <div className="flex flex-col pt-2">
-          <div className="line-clamp-2 text-lg font-medium transition group-hover:text-sky-700 md:text-base">
+          <div className="line-clamp-2 text-lg font-medium transition group-hover:text-accent-foreground md:text-base">
             {title}
           </div>
           <p className="text-xs text-muted-foreground">{category}</p>

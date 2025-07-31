@@ -8,6 +8,7 @@ import { Actions } from "./_components/actions";
 import CategoryForm from "./_components/category-form";
 import ChaptersForm from "./_components/chapters-form";
 import DescriptionForm from "./_components/description-form";
+import CourseImageForm from "./_components/image-form";
 import TitleForm from "./_components/title-form";
 
 const CourseIdPage = async ({
@@ -34,11 +35,6 @@ const CourseIdPage = async ({
           position: "asc",
         },
       },
-      attachments: {
-        orderBy: {
-          createdAt: "asc",
-        },
-      },
     },
   });
 
@@ -56,6 +52,7 @@ const CourseIdPage = async ({
   const requiredFields = [
     course.title,
     course.description,
+    course.imageUrl,
     // course.categoryId,
     course.chapters.some((chapter) => chapter.isPublished),
   ];
@@ -105,6 +102,7 @@ be visible to students."
                 value: category.id,
               }))}
             />
+            <CourseImageForm initialData={course} courseId={course.id} />
           </div>
           <div className="space-y-6">
             <div className="">

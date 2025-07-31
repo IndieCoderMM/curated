@@ -6,8 +6,19 @@ import { useState } from "react";
 import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import YouTubeEmbed from "@/components/youtube-embed";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Chapter } from "@prisma/client";
 import { Pencil, PlusCircle, Video } from "lucide-react";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 interface ChapterVideoFormProps {
@@ -27,6 +38,11 @@ export const ChapterVideoForm = ({
 }: ChapterVideoFormProps) => {
   const router = useRouter();
 
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+  });
+
+  const { isSubmitting, isValid } = form.formState;
   const [isEditing, setIsEditing] = useState(false);
   const toggleEdit = () => setIsEditing((current) => !current);
 
@@ -64,16 +80,46 @@ export const ChapterVideoForm = ({
           )}
         </Button>
       </div>
-      {!isEditing &&
-        (!initialData.videoUrl ? (
+      {!isEditing ? (
+        !initialData.videoUrl ? (
           <div className="flex h-60 items-center justify-center rounded-md bg-slate-200">
             <Video className="h-10 w-10 text-slate-500" />
           </div>
         ) : (
-          <div className="relative mt-2 aspect-video">
-            <div className="h-200 bg-neutral-400">Video Placeholder</div>
+          <div className="aspect-video w-full">
+            <YouTubeEmbed url={initialData.videoUrl} />
           </div>
-        ))}
+        )
+      ) : (
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="mt-4 space-y-4"
+          >
+            <FormField
+              control={form.control}
+              name="videoUrl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      disabled={isSubmitting}
+                      placeholder="Enter video URL"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex items-center gap-x-2">
+              <Button type="submit" disabled={!isValid || isSubmitting}>
+                Save
+              </Button>
+            </div>
+          </form>
+        </Form>
+      )}
       {initialData.videoUrl && !isEditing && (
         <div className="mt-2 text-xs text-muted-foreground">
           Videos may take a few minutes to process. Refresh the page if the

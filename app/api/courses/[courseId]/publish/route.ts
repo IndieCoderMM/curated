@@ -21,8 +21,8 @@ export async function PATCH(
       },
       include: {
         chapters: {
-          include: {
-            muxData: true,
+          orderBy: {
+            position: "asc",
           },
         },
       },
@@ -39,8 +39,7 @@ export async function PATCH(
     if (
       !course.title ||
       !course.description ||
-      !course.imageUrl ||
-      !course.categoryId ||
+      // !course.categoryId ||
       !hasPublishedChapter
     ) {
       return new NextResponse("Missing required fields", { status: 401 });

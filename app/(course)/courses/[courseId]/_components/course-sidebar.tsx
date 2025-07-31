@@ -4,8 +4,10 @@ import { redirect } from "next/navigation";
 
 import { db } from "@/lib/db";
 
-import { CourseSidebarItem } from "./course-sidebar-item";
 import { CourseProgress } from "@/components/course-progress";
+import { ChevronLeft } from "lucide-react";
+import Link from "next/link";
+import { CourseSidebarItem } from "./course-sidebar-item";
 
 interface CourseSidebarProps {
   course: Course & {
@@ -36,16 +38,25 @@ export const CourseSidebar = async ({
   });
 
   return (
-    <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm">
-      <div className="p-8 flex flex-col border-b">
-        <h1 className="font-semibold">{course.title}</h1>
+    <div className="flex h-full flex-col overflow-y-auto border-r shadow-sm">
+      <div className="flex flex-col border-b p-4">
+        <div className="flex items-center gap-2">
+          <Link
+            title="Back"
+            href={"/"}
+            className="flex h-6 w-6 items-center justify-center rounded-full text-gray-500 transition-colors hover:bg-neutral-100 hover:text-gray-600"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </Link>
+          <h1 className="font-semibold">{course.title}</h1>
+        </div>
         {purchase && (
           <div className="mt-10">
             <CourseProgress variant="success" value={progressCount} />
           </div>
         )}
       </div>
-      <div className="flex flex-col w-full">
+      <div className="flex w-full flex-col">
         {course.chapters.map((chapter) => (
           <CourseSidebarItem
             key={chapter.id}

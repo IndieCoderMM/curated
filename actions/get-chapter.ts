@@ -1,5 +1,4 @@
-import { db } from '@/lib/db';
-import { Attachment, Chapter } from '@prisma/client';
+import { db } from "@/lib/db";
 
 interface GetChapterProps {
   userId: string;
@@ -27,9 +26,6 @@ export const getChaper = async ({
         isPublished: true,
         id: courseId,
       },
-      select: {
-        price: true,
-      },
     });
 
     const chapter = await db.chapter.findUnique({
@@ -40,41 +36,21 @@ export const getChaper = async ({
     });
 
     if (!chapter || !course) {
-      throw new Error('Chapter or Course not found');
+      throw new Error("Chapter or Course not found");
     }
 
-    let muxData = null;
-    let attachments: Attachment[] = [];
-    let nextChapter: Chapter | null = null;
-
-    if (purchase) {
-      attachments = await db.attachment.findMany({
-        where: {
-          courseId,
+    const nextChapter = await db.chapter.findFirst({
+      where: {
+        courseId,
+        isPublished: true,
+        position: {
+          gt: chapter?.position,
         },
-      });
-    }
-
-    if (chapter.isFree || purchase) {
-      muxData = await db.muxData.findUnique({
-        where: {
-          chapterId,
-        },
-      });
-
-      nextChapter = await db.chapter.findFirst({
-        where: {
-          courseId,
-          isPublished: true,
-          position: {
-            gt: chapter?.position,
-          },
-        },
-        orderBy: {
-          position: 'asc',
-        },
-      });
-    }
+      },
+      orderBy: {
+        position: "asc",
+      },
+    });
 
     const userProgress = await db.userProgress.findUnique({
       where: {
@@ -88,19 +64,15 @@ export const getChaper = async ({
     return {
       chapter,
       course,
-      muxData,
-      attachments,
       nextChapter,
       userProgress,
       purchase,
     };
   } catch (error) {
-    console.log('[GET_CHAPTER]', error);
+    console.log("[GET_CHAPTER]", error);
     return {
       chapter: null,
       course: null,
-      muxData: null,
-      attachments: [],
       nextChapter: null,
       userProgress: null,
       purchase: null,

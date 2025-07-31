@@ -3,13 +3,14 @@
 import axios from "axios";
 import { Loader2, Lock } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
+import YouTubeEmbed from "@/components/youtube-embed";
 import { useConfettiStore } from "@/hooks/use-confetti-store";
 
 interface VideoPlayerProps {
-  playbackId: string;
+  videoUrl: string;
   courseId: string;
   chapterId: string;
   nextChapterId?: string;
@@ -19,7 +20,7 @@ interface VideoPlayerProps {
 }
 
 export const VideoPlayer = ({
-  playbackId,
+  videoUrl,
   courseId,
   chapterId,
   nextChapterId,
@@ -31,6 +32,17 @@ export const VideoPlayer = ({
   const router = useRouter();
   const confetti = useConfettiStore();
 
+  useEffect(() => {
+    const handleVideoReady = () => {
+      setIsReady(true);
+    };
+
+    // Simulate video ready state after a short delay
+    const timer = setTimeout(handleVideoReady, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const onEnd = async () => {
     try {
       if (completeOnEnd) {
@@ -41,7 +53,7 @@ export const VideoPlayer = ({
           },
         );
         if (!nextChapterId) confetti.onOpen();
-        toast.success("Progreso actualizado.");
+        toast.success("Progress updated.");
         router.refresh();
 
         if (nextChapterId) {
@@ -49,12 +61,13 @@ export const VideoPlayer = ({
         }
       }
     } catch (error) {
-      toast.error("Ocurrió un error.");
+      toast.error("An error occurred.");
     }
   };
 
   return (
     <div className="relative aspect-video">
+      <YouTubeEmbed url={videoUrl} />
       {!isReady && !isLocked && (
         <div className="absolute inset-0 flex items-center justify-center bg-slate-800">
           <Loader2 className="h-8 w-8 animate-spin text-secondary" />
@@ -63,7 +76,10 @@ export const VideoPlayer = ({
       {isLocked && (
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-y-2 bg-slate-800 text-secondary">
           <Lock className="h-8 w-8" />
-          <p className="text-sm">Este capítulo esta bloqueado.</p>
+          <p className="text-sm">
+            This chapter is locked. Please complete the previous chapter to
+            unlock it.
+          </p>
         </div>
       )}
     </div>

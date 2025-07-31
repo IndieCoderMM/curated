@@ -1,5 +1,5 @@
-import { db } from '@/lib/db';
-import { Course, Purchase } from '@prisma/client';
+import { db } from "@/lib/db";
+import { Course, Purchase } from "@prisma/client";
 
 type PurchaseWithCourse = Purchase & {
   course: Course;
@@ -13,7 +13,7 @@ const groupByCourse = (purchases: PurchaseWithCourse[]) => {
     if (!grouped[courseTitle]) {
       grouped[courseTitle] = 0;
     }
-    grouped[courseTitle] += purchase.course.price!;
+    grouped[courseTitle] += 1;
   });
 
   return grouped;
@@ -37,7 +37,7 @@ export const getAnalytics = async (userId: string) => {
       ([courseTitle, total]) => ({
         name: courseTitle,
         total: total,
-      })
+      }),
     );
 
     const totalRevenue = data.reduce((acc, curr) => acc + curr.total, 0);
@@ -49,7 +49,7 @@ export const getAnalytics = async (userId: string) => {
       totalSales,
     };
   } catch (error) {
-    console.log('[GET_ANALYTICS]', error);
+    console.log("[GET_ANALYTICS]", error);
     return {
       data: [],
       totalRevenue: 0,

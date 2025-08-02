@@ -49,7 +49,7 @@ export const getAnalytics = async (userId: string) => {
       totalSales,
     };
   } catch (error) {
-    console.log("[GET_ANALYTICS]", error);
+    console.log("Failed to get analytics", error);
     return {
       data: [],
       totalRevenue: 0,

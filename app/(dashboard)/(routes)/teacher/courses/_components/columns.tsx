@@ -30,26 +30,22 @@ export const columns: ColumnDef<Course>[] = [
     },
   },
   {
-    accessorKey: "price",
+    accessorKey: "enrollment",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Price
+          Enrollment
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const price = parseFloat(row.getValue("price") || "0");
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(price);
+      const total = (row.getValue("enrollment") || 0) as number;
 
-      return <span>{formatted}</span>;
+      return <span className="">{total}</span>;
     },
   },
   {

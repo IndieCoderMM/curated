@@ -3,12 +3,13 @@ import { cn } from "@/lib/utils";
 
 interface CourseProgressProps {
   value: number;
-  variant?: "default" | "success";
+  variant?: "default" | "success" | "accent";
   size?: "default" | "sm";
 }
 
 const colorByVariant = {
-  default: "text-accent-foreground",
+  default: "text-primary",
+  accent: "text-accent-foreground",
   success: "text-emerald-700",
 };
 

@@ -3,15 +3,16 @@
 import { Category } from "@prisma/client";
 import { IconType } from "react-icons";
 import {
-  FcBiomass,
-  FcBiotech,
-  FcBriefcase,
-  FcBusinessman,
-  FcCommandLine,
-  FcEngineering,
-  FcFilingCabinet,
-  FcMultipleDevices,
-} from "react-icons/fc";
+  SlDrawer,
+  SlGameController,
+  SlGlobe,
+  SlLayers,
+  SlPuzzle,
+  SlScreenSmartphone,
+  SlSettings,
+  SlSpeech,
+  SlWrench,
+} from "react-icons/sl";
 import { CategoryItem } from "./category-item";
 
 interface CategoriesProps {
@@ -19,19 +20,20 @@ interface CategoriesProps {
 }
 
 const iconMap: Record<Category["name"], IconType> = {
-  Businsess: FcBusinessman,
-  Science: FcBiomass,
-  Accounting: FcFilingCabinet,
-  Trading: FcBriefcase,
-  Engineering: FcEngineering,
-  Medicine: FcBiotech,
-  Programming: FcCommandLine,
-  Technology: FcMultipleDevices,
+  "Web Development": SlGlobe,
+  "Mobile Development": SlScreenSmartphone,
+  "Game Development": SlGameController,
+  "Dynamic Programming": SlPuzzle,
+  "Project-Based Learning": SlWrench,
+  Algorithms: SlSettings,
+  "System Design": SlLayers,
+  "Large Language Models": SlSpeech,
+  "Data Structures": SlDrawer,
 };
 
 export const Categories = ({ items }: CategoriesProps) => {
   return (
-    <div className="flex items-center gap-x-2 overflow-x-auto pb-2">
+    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 pb-2">
       {items.map((item) => (
         <CategoryItem
           key={item.id}

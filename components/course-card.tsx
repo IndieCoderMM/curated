@@ -53,8 +53,12 @@ export const CourseCard = ({
             <CourseProgress
               size="sm"
               value={progress}
-              variant={progress === 100 ? "success" : "default"}
+              variant={progress === 100 ? "accent" : "success"}
             />
+          ) : price === 0 ? (
+            <p className="text-md font-medium text-green-600 md:text-sm">
+              Free Enrollment
+            </p>
           ) : (
             <p className="text-md font-medium text-slate-700 md:text-sm">
               {formatPrice(price)}

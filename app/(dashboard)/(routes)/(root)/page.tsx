@@ -13,8 +13,6 @@ export default async function Dashboard() {
     return redirect("/sign-in");
   }
 
-  console.log("User ID:", userId);
-
   const { completedCourses, coursesInProgress } =
     await getDashboardCourses(userId);
 
@@ -25,6 +23,7 @@ export default async function Dashboard() {
           icon={Clock}
           label="In Progress"
           numberOfItems={coursesInProgress.length}
+          variant="warn"
         />
         <InfoCard
           icon={CheckCircle}

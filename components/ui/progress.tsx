@@ -9,7 +9,8 @@ import { cn } from "@/lib/utils";
 const progressVariants = cva("h-full w-full flex-1 bg-primary transition-all", {
   variants: {
     variant: {
-      default: "bg-accent",
+      default: "bg-primary",
+      accent: "bg-accent",
       success: "bg-emerald-700",
     },
   },
@@ -46,4 +47,3 @@ const Progress = React.forwardRef<
 Progress.displayName = ProgressPrimitive.Root.displayName;
 
 export { Progress };
-

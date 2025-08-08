@@ -14,11 +14,11 @@ import { Input } from "@/components/ui/input";
 import { RegisterSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2Icon } from "lucide-react";
-import { useState, useTransition } from "react";
+import Link from "next/link";
+import { useTransition } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import * as z from "zod";
-import FormError from "./form-error";
-import FormSuccess from "./form-success";
 
 interface RegisterFormProps {
   heading?: string;
@@ -35,8 +35,6 @@ const RegisterForm = ({
   signupUrl = "/login",
 }: RegisterFormProps) => {
   const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -54,25 +52,19 @@ const RegisterForm = ({
     startTransition(() => {
       register(data).then((result) => {
         if (result.success) {
-          setSuccess(result.success);
-          setError(null);
           form.reset();
+          toast.success("Account created successfully!");
         } else {
-          setError(result.error ?? null);
-          setSuccess(null);
+          toast.error(result.error ?? "Registration failed");
         }
       });
-      setTimeout(() => {
-        setError(null);
-        setSuccess(null);
-      }, 5000); // Clear messages after 5 seconds
     });
   };
 
   return (
-    <div className="flex flex-col items-center gap-6 lg:justify-start">
+    <div className="flex w-full flex-col items-center gap-6 lg:justify-start">
       <Logo />
-      <div className="flex w-full max-w-md flex-col gap-y-4 rounded-md border border-muted bg-background px-6 py-8 shadow-md">
+      <div className="flex w-full max-w-sm flex-col gap-y-4 rounded-md border border-muted bg-background px-6 py-8 shadow-md">
         {heading && (
           <h1 className="text-center text-xl font-semibold">{heading}</h1>
         )}
@@ -96,7 +88,7 @@ const RegisterForm = ({
                         required
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-sm" />
                   </FormItem>
                 )}
               />
@@ -114,7 +106,7 @@ const RegisterForm = ({
                         required
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-sm" />
                   </FormItem>
                 )}
               />
@@ -132,7 +124,7 @@ const RegisterForm = ({
                         required
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-sm" />
                   </FormItem>
                 )}
               />
@@ -150,13 +142,11 @@ const RegisterForm = ({
                         required
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-sm" />
                   </FormItem>
                 )}
               />
             </div>
-            <FormError message={error} />
-            <FormSuccess message={success} />
             <Button type="submit" disabled={isPending} className="w-full">
               {isPending ? (
                 <Loader2Icon className="h-4 w-4 animate-spin" />
@@ -169,12 +159,12 @@ const RegisterForm = ({
       </div>
       <div className="flex justify-center gap-1 text-sm text-muted-foreground">
         <p>{signupText}</p>
-        <a
+        <Link
           href={signupUrl}
           className="font-medium text-primary hover:underline"
         >
-          Sign up
-        </a>
+          Log in here
+        </Link>
       </div>
     </div>
   );

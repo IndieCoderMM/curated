@@ -25,7 +25,7 @@ export function UserButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-9 gap-2 rounded-full px-2">
+        <Button variant="ghost" className="h-9 gap-2 px-2">
           <span className="relative inline-flex h-7 w-7 items-center justify-center overflow-hidden rounded-full bg-muted">
             {avatarUrl ? (
               <Image
@@ -48,7 +48,7 @@ export function UserButton() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="truncate">
-          Signed in as {name}
+          {user?.email || "No email"}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <Link href="/teacher/courses">

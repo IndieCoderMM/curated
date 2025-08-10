@@ -1,5 +1,5 @@
+import { auth } from "@/auth";
 import { db } from "@/lib/db";
-import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 export async function PATCH(
@@ -7,7 +7,8 @@ export async function PATCH(
   { params }: { params: { courseId: string; chapterId: string } },
 ) {
   try {
-    const { userId } = await auth();
+    const session = await auth();
+    const userId = session?.user?.id;
     const { isPublished, ...values } = await req.json();
 
     if (!userId) return new NextResponse("Unauthorized", { status: 401 });
@@ -43,7 +44,8 @@ export async function DELETE(
   { params }: { params: { courseId: string; chapterId: string } },
 ) {
   try {
-    const { userId } = await auth();
+    const session = await auth();
+    const userId = session?.user?.id;
     if (!userId) return new NextResponse("Unauthorized", { status: 401 });
 
     const ownCourse = await db.course.findUnique({

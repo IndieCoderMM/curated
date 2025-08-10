@@ -5,11 +5,11 @@ import { usePathname } from "next/navigation";
 
 import { SidebarItem } from "./sidebar-item";
 
-const guestRoutes = [
+const studentRoutes = [
   {
     icon: Layout,
     label: "Dashboard",
-    href: "/",
+    href: "/dashboard",
   },
   {
     icon: Compass,
@@ -36,7 +36,7 @@ export const SidebarRoutes = () => {
 
   const isTeacherPage = pathname?.includes("/teacher");
 
-  const routes = isTeacherPage ? teacherRoutes : guestRoutes;
+  const routes = isTeacherPage ? teacherRoutes : studentRoutes;
 
   return (
     <div className="flex w-full flex-col">

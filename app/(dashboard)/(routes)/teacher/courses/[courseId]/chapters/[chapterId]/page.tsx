@@ -1,7 +1,7 @@
+import { auth } from "@/auth";
 import Banner from "@/components/banner";
 import { IconBadge } from "@/components/icon-badge";
 import { db } from "@/lib/db";
-import { auth } from "@clerk/nextjs/server";
 import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -19,7 +19,8 @@ const ChapterIdPage = async ({
     chapterId: string;
   };
 }) => {
-  const { userId } = await auth();
+  const session = await auth();
+  const userId = session?.user?.id;
 
   if (!userId) return redirect("/");
 

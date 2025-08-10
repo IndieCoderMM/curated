@@ -24,15 +24,15 @@ interface RegisterFormProps {
   heading?: string;
   buttonText?: string;
   googleText?: string;
-  signupText?: string;
-  signupUrl?: string;
+  signInText?: string;
+  signInUrl?: string;
 }
 
 const RegisterForm = ({
   heading = "Register",
   buttonText = "Register",
-  signupText = "Already have an account?",
-  signupUrl = "/login",
+  signInText = "Already have an account?",
+  signInUrl = "/login",
 }: RegisterFormProps) => {
   const [isPending, startTransition] = useTransition();
 
@@ -158,12 +158,12 @@ const RegisterForm = ({
         </Form>
       </div>
       <div className="flex justify-center gap-1 text-sm text-muted-foreground">
-        <p>{signupText}</p>
+        <p>{signInText}</p>
         <Link
-          href={signupUrl}
+          href={signInUrl}
           className="font-medium text-primary hover:underline"
         >
-          Log in here
+          Sign in
         </Link>
       </div>
     </div>

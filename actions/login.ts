@@ -1,29 +1,43 @@
 "use server";
 
-import { db } from "@/lib/db";
+import { signIn } from "@/auth";
 import { LoginSchema } from "@/lib/schemas";
-import bcrypt from "bcrypt";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { AuthError } from "next-auth";
 import * as z from "zod";
 
-export const login = async (data: z.infer<typeof LoginSchema>) => {
+type LoginResponse = { success?: string; error?: string };
+
+export const login = async (
+  data: z.infer<typeof LoginSchema>,
+): Promise<LoginResponse> => {
   const result = LoginSchema.safeParse(data);
   if (!result.success) {
     return {
       error: result.error.errors.map((e) => e.message).join(", "),
-    } as const;
+    };
   }
 
   const { email, password } = result.data;
 
-  const user = await db.user.findUnique({ where: { email } });
-  if (!user || !user.password) {
-    return { error: "Invalid email or password" } as const;
-  }
+  try {
+    await signIn("credentials", {
+      email,
+      password,
+      redirectTo: DEFAULT_LOGIN_REDIRECT,
+    });
 
-  const isValid = await bcrypt.compare(password, user.password);
-  if (!isValid) {
-    return { error: "Invalid email or password" } as const;
-  }
+    return { success: "Logged in successfully" };
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case "CredentialsSignin":
+          return { error: "Invalid crendials" };
+        default:
+          return { error: "Something went worng!" };
+      }
+    }
 
-  return { success: "Logged in successfully" } as const;
+    throw error;
+  }
 };

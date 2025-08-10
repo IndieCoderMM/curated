@@ -1,7 +1,7 @@
+import { auth } from "@/auth";
 import Banner from "@/components/banner";
 import { IconBadge } from "@/components/icon-badge";
 import { db } from "@/lib/db";
-import { auth } from "@clerk/nextjs/server";
 import { LayoutDashboard, ListChecks } from "lucide-react";
 import { redirect } from "next/navigation";
 import { Actions } from "./_components/actions";
@@ -18,7 +18,8 @@ const CourseIdPage = async ({
     courseId: string;
   };
 }) => {
-  const { userId } = await auth();
+  const session = await auth();
+  const userId = session?.user?.id;
 
   if (!userId) {
     return redirect("/");

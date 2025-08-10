@@ -1,5 +1,5 @@
+import { auth } from "@/auth";
 import { db } from "@/lib/db";
-import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 export async function PUT(
@@ -7,7 +7,8 @@ export async function PUT(
   { params }: { params: { courseId: string; chapterId: string } },
 ) {
   try {
-    const { userId } = await auth();
+    const session = await auth();
+    const userId = session?.user?.id;
     if (!userId) return new NextResponse("Unauthorized", { status: 401 });
 
     const { isCompleted } = await req.json();

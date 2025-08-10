@@ -47,10 +47,8 @@ const LoginForm = ({
   const onSubmit: SubmitHandler<z.infer<typeof LoginSchema>> = async (data) => {
     startTransition(() => {
       login(data).then((result) => {
-        if (result.success) {
-          form.reset();
-          toast.success("Logged in successfully!");
-        } else {
+        console.log("Login result:", result);
+        if (result?.error) {
           toast.error(result.error ?? "Login failed");
         }
       });

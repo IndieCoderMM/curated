@@ -67,15 +67,20 @@
    cp .env.example .env
    ```
 
-   Edit the `.env` file with your settings (database URL, API keys, etc.)
+4. Fill in the following values:
+   - `NEXT_PUBLIC_APP_URL=`: The base URL of your app (e.g., `https://your-app.vercel.app`).
+   - `GITHUB_CLIENT_ID=` and `GITHUB_CLIENT_SECRET=`: Obtain these by creating an OAuth app in [GitHub Developer Settings](https://github.com/settings/developers).
+   - `GOOGLE_CLIENT_ID=` and `GOOGLE_CLIENT_SECRET=`: Create credentials in the [Google Cloud Console](https://console.cloud.google.com/apis/credentials) under APIs & Services > Credentials.
+   - `DATABASE_URL=`: The connection string for MongoDB
+   - `AUTH_SECRET=`: A random string used to sign auth tokens. You can generate one using [Random.org](https://www.random.org/strings/) or any secure random generator.
 
-4. Start the development server:
+5. Start the development server:
 
    ```bash
    npm run dev
    ```
 
-5. Visit the app at:
+6. Visit the app at:
 
    ```
    http://localhost:3000

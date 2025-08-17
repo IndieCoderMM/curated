@@ -19,19 +19,53 @@ export const {
   signOut,
   handlers: { GET, POST },
 } = NextAuth({
+  events: {
+    linkAccount: async ({ user }) => {
+      await db.user.update({
+        where: { id: user.id },
+        data: {
+          emailVerified: new Date(), // Skip email verification for linked accounts
+        },
+      });
+    },
+  },
   callbacks: {
     jwt: async ({ token }) => {
       if (!token.sub) {
         return token;
       }
 
-      const role = await getUserById(token.sub);
-      token.role = role;
+      const dbUser = await getUserById(token.sub);
+      if (!dbUser) {
+        return token;
+      }
+
+      token.role = dbUser.role;
       return token;
     },
     session: async ({ session, token }) => {
+      if (token.sub) {
+        session.user.id = token.sub;
+      }
       session.user.role = (token.role as UserRole) ?? UserRole.USER;
       return session;
+    },
+    signIn: async ({ user, account }) => {
+      if (!user.id) {
+        return false;
+      }
+
+      if (account?.provider !== "credentials") {
+        return true;
+      }
+
+      const dbUser = await getUserById(user.id);
+
+      if (dbUser && dbUser.email && dbUser.emailVerified) {
+        return true;
+      }
+
+      return false;
     },
   },
   adapter: PrismaAdapter(db),

@@ -8,14 +8,14 @@ import { InfoCard } from "./_components/info-card";
 
 export default async function Dashboard() {
   const session = await auth();
+  const userId = session?.user?.id;
 
-  console.log(session?.user);
-
-  if (!session) {
+  if (!userId) {
     return redirect("/login");
   }
 
-  const { completedCourses, coursesInProgress } = await getDashboardCourses("");
+  const { completedCourses, coursesInProgress } =
+    await getDashboardCourses(userId);
 
   return (
     <div className="space-y-4 px-6 py-4">

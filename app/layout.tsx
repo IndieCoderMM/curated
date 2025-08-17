@@ -1,10 +1,10 @@
 import { ConfettiProvider } from "@/components/providers/confetti-provider";
 import { ToastProvider } from "@/components/providers/toaster-provider";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const mainFont = Outfit({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "CuratEd | Self-taught Learning Platform",
@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={mainFont.className}>
         <ConfettiProvider />
         <ToastProvider />
         {children}

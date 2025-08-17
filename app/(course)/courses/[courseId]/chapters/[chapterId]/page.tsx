@@ -42,7 +42,7 @@ const ChaperIdPage = async ({
       {isLocked && (
         <Banner
           variant="warning"
-          label="You need to purchase this course to view this chapter."
+          label="You need to enroll this course to view this chapter."
         />
       )}
       <div className="mx-auto flex max-w-4xl flex-col pb-20">

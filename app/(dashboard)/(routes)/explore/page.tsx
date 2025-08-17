@@ -1,11 +1,10 @@
 import { auth } from "@/auth";
-import { redirect } from "next/navigation";
 
 import { getCourses } from "@/actions/get-courses";
 import { CoursesList } from "@/components/courses-list";
 import { SearchInput } from "@/components/search-input";
-import { db } from "@/lib/db";
 
+import { db } from "@/lib/db";
 import { Categories } from "./_components/categories";
 
 interface SearchPageProps {
@@ -17,13 +16,9 @@ interface SearchPageProps {
 
 const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const session = await auth();
-  const userId = session?.user?.id;
+  const userId = session?.user?.id ?? "public";
 
-  if (!userId) {
-    return redirect("/");
-  }
-
-  const categories = await db.category.findMany({
+  const items = await db.category.findMany({
     orderBy: {
       name: "asc",
     },
@@ -40,7 +35,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
         <SearchInput />
       </div>
       <div className="space-y-4 p-6">
-        <Categories items={categories} />
+        <Categories items={items} />
         <CoursesList items={courses} />
       </div>
     </>

@@ -22,6 +22,19 @@ export function UserButton() {
   const avatarUrl = (user as any)?.image || (user as any)?.avatar || "";
   const initial = (name?.[0] || "U").toUpperCase();
 
+  if (!user) {
+    return (
+      <div className="hidden items-center gap-2 sm:flex">
+        <Link href="/login">
+          <Button variant="ghost">Login</Button>
+        </Link>
+        <Link href="/register">
+          <Button>Register</Button>
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

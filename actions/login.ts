@@ -1,6 +1,7 @@
 "use server";
 
 import { signIn } from "@/auth";
+import { getUserByEmail } from "@/lib/queries";
 import { LoginSchema } from "@/lib/schemas";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
@@ -19,6 +20,18 @@ export const login = async (
   }
 
   const { email, password } = result.data;
+
+  const user = await getUserByEmail(email);
+  if (!user || !user.email || !user.password) {
+    return { error: "Email does not exist" };
+  }
+
+  // @todo Send email confirmation
+  // if (!user.emailVerified) {
+  //   const token = await generateVerificationToken(user.email);
+
+  //   return { error: "Confirmation email sent" };
+  // }
 
   try {
     await signIn("credentials", {

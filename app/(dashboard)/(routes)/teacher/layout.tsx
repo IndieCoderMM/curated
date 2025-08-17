@@ -6,7 +6,7 @@ const TeacherLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await auth();
   const userId = session?.user?.id;
 
-  if (!isTeacher(userId)) return redirect("/");
+  if (!isTeacher(userId)) return redirect("/login");
 
   return <>{children}</>;
 };

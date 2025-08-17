@@ -56,9 +56,9 @@ export default async function LandingPage() {
               <Link href="/register">
                 <Button size="lg">Get started free</Button>
               </Link>
-              <Link href="/login">
+              <Link href="/explore">
                 <Button size="lg" variant="outline">
-                  I already have an account
+                  Browse Available Courses
                 </Button>
               </Link>
             </div>

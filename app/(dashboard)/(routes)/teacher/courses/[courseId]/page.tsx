@@ -77,8 +77,7 @@ be visible to students."
           <div className="flex flex-col gap-y-2">
             <h1 className="text-2xl font-medium">Course Settings</h1>
             <span className="text-sm text-slate-700">
-              Complete the following fields to publish your course:
-              {completionText}
+              Complete all fields to publish your course {completionText}
             </span>
           </div>
           <Actions

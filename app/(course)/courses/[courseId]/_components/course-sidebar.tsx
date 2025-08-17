@@ -44,7 +44,7 @@ export const CourseSidebar = async ({
         <div className="flex items-center gap-2">
           <Link
             title="Back"
-            href={"/"}
+            href={"/dashboard"}
             className="flex h-6 w-6 items-center justify-center rounded-full text-gray-500 transition-colors hover:bg-neutral-100 hover:text-gray-600"
           >
             <ChevronLeft className="h-5 w-5" />

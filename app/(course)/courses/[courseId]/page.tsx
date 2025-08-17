@@ -1,5 +1,5 @@
-import { db } from '@/lib/db';
-import { redirect } from 'next/navigation';
+import { db } from "@/lib/db";
+import { redirect } from "next/navigation";
 
 const CourseIdPage = async ({
   params,
@@ -18,13 +18,13 @@ const CourseIdPage = async ({
           isPublished: true,
         },
         orderBy: {
-          position: 'asc',
+          position: "asc",
         },
       },
     },
   });
 
-  if (!course) redirect('/');
+  if (!course) redirect("/");
 
   return redirect(`/courses/${course.id}/chapters/${course.chapters[0].id}`);
 };

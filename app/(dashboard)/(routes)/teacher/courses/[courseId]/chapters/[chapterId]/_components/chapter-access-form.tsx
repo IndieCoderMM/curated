@@ -88,9 +88,9 @@ export const ChapterAccessForm = ({
           )}
         >
           {initialData.isFree ? (
-            <>This chapter is free for preview.</>
+            <>Available for public.</>
           ) : (
-            <>Paid Chapter</>
+            <>Only available for logged in users.</>
           )}
         </div>
       )}
@@ -113,7 +113,7 @@ export const ChapterAccessForm = ({
                   </FormControl>
                   <div className="space-y-1 leading-none">
                     <FormDescription>
-                      Check this box to make the chapter free for preview.
+                      Check this box to make the chapter available for public.
                     </FormDescription>
                   </div>
                 </FormItem>

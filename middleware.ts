@@ -22,7 +22,9 @@ export default auth((req) => {
     return null;
   }
 
-  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+  const isPublicRoute =
+    publicRoutes.includes(nextUrl.pathname) ||
+    nextUrl.pathname.startsWith("/courses/"); // Allow public access to course pages
   if (!isPublicRoute && !isLoggedIn) {
     return Response.redirect(new URL("/login", nextUrl));
   }

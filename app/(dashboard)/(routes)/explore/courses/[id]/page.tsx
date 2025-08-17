@@ -35,7 +35,7 @@ export default async function CourseOverview({ params }: PageProps) {
           <CardHeader>
             <CardTitle>Course not found</CardTitle>
             <CardDescription>
-              We couldn't find the course you were looking for.
+              We couldn&apos;t find the course you were looking for.
             </CardDescription>
           </CardHeader>
         </Card>

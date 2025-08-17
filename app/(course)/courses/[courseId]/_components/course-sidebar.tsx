@@ -40,7 +40,7 @@ export const CourseSidebar = async ({
 
   return (
     <div className="flex h-full flex-col overflow-y-auto border-r shadow-sm">
-      <div className="flex flex-col border-b p-4">
+      <div className="flex min-h-[60px] flex-col border-b p-4">
         <div className="flex items-center gap-2">
           <Link
             title="Back"
@@ -49,10 +49,10 @@ export const CourseSidebar = async ({
           >
             <ChevronLeft className="h-5 w-5" />
           </Link>
-          <h1 className="font-semibold">{course.title}</h1>
+          <h1 className="truncate font-semibold">{course.title}</h1>
         </div>
         {purchase && (
-          <div className="mt-10">
+          <div className="mt-4">
             <CourseProgress variant="success" value={progressCount} />
           </div>
         )}

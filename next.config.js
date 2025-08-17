@@ -21,6 +21,10 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "**", // allow all https domains
+      },
     ],
   },
 };

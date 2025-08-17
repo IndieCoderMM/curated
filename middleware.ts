@@ -22,9 +22,23 @@ export default auth((req) => {
     return null;
   }
 
-  const isPublicRoute =
-    publicRoutes.includes(nextUrl.pathname) ||
-    nextUrl.pathname.startsWith("/courses/"); // Allow public access to course pages
+  // use Regex to check if the route is public
+  const pathToRegex = (pattern: string) => {
+    // Escape regex special chars first
+    let regexStr = pattern.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    // Support Next-style dynamic segments: [id]
+    regexStr = regexStr.replace(/\\\[[^/]+?\\\]/g, "[^/]+");
+    // Support param segments like :id
+    regexStr = regexStr.replace(/:([A-Za-z0-9_]+)/g, "[^/]+");
+    // Support wildcard *
+    regexStr = regexStr.replace(/\\\*/g, ".*");
+    return new RegExp(`^${regexStr}$`);
+  };
+
+  const isPublicRoute = publicRoutes.some((route) =>
+    pathToRegex(route).test(nextUrl.pathname),
+  );
+
   if (!isPublicRoute && !isLoggedIn) {
     return Response.redirect(new URL("/login", nextUrl));
   }

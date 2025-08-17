@@ -25,7 +25,7 @@ export const CourseCard = ({
   category,
 }: CourseCardProps) => {
   return (
-    <Link href={`/courses/${id}`}>
+    <Link href={`/explore/courses/${id}`}>
       <div className="group h-full overflow-hidden rounded-lg border p-3 transition hover:shadow-sm">
         <div className="relative aspect-video w-full overflow-hidden rounded-md">
           {imageUrl ? (
@@ -57,7 +57,7 @@ export const CourseCard = ({
             />
           ) : price === 0 ? (
             <p className="text-md font-medium text-green-600 md:text-sm">
-              Free Enrollment
+              Free Enrollment Available
             </p>
           ) : (
             <p className="text-md font-medium text-slate-700 md:text-sm">

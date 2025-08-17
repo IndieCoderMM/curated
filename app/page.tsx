@@ -90,6 +90,7 @@ export default async function LandingPage() {
             width={1000}
             height={800}
             className="w-full object-contain"
+            priority
           />
         </div>
       </section>

@@ -5,11 +5,12 @@ export const Logo = () => {
   return (
     <Link href="/" className="">
       <Image
-        height={100}
-        width={100}
-        alt="logo"
+        height={500}
+        width={500}
+        alt="Curated"
         src="/logo.png"
         className="w-[120px] object-contain"
+        priority
       />
     </Link>
   );

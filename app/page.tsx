@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { Logo } from "@/components/logo";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { appRoutes, authRoutes } from "@/routes";
 import { GraduationCapIcon, TrendingUpIcon, Users2Icon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,15 +19,15 @@ export default async function LandingPage() {
         </div>
         <div className="hidden items-center gap-2 sm:flex">
           {session ? (
-            <Link href="/dashboard">
+            <Link href={appRoutes.dashboard}>
               <Button variant="outline">Go to Dashboard</Button>
             </Link>
           ) : (
             <>
-              <Link href="/login">
+              <Link href={authRoutes.login}>
                 <Button variant="ghost">Login</Button>
               </Link>
-              <Link href="/register">
+              <Link href={authRoutes.register}>
                 <Button>Register</Button>
               </Link>
             </>
@@ -53,15 +54,15 @@ export default async function LandingPage() {
             about growth.
           </p>
           {session ? (
-            <Link href="/dashboard">
+            <Link href={appRoutes.dashboard}>
               <Button size="lg">Go to Dashboard</Button>
             </Link>
           ) : (
             <div className="flex flex-wrap gap-3">
-              <Link href="/register">
+              <Link href={authRoutes.register}>
                 <Button size="lg">Get started free</Button>
               </Link>
-              <Link href="/explore">
+              <Link href={appRoutes.explore}>
                 <Button size="lg" variant="outline">
                   Browse Available Courses
                 </Button>

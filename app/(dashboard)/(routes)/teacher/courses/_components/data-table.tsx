@@ -25,6 +25,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { appRoutes } from "@/routes";
 import { PlusCircle } from "lucide-react";
 import Link from "next/link";
 
@@ -71,8 +72,7 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-        <Link href="/teacher/create">
-          {/* @todo fix this please */}
+        <Link href={appRoutes.createCourse}>
           <Button variant="default">
             <PlusCircle className="mr-2 h-4 w-4" />
             Add Course

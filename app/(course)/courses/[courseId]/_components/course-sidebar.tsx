@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 
 import { CourseProgress } from "@/components/course-progress";
+import { appRoutes } from "@/routes";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { CourseSidebarItem } from "./course-sidebar-item";
@@ -26,7 +27,7 @@ export const CourseSidebar = async ({
   const userId = session?.user?.id;
 
   if (!userId) {
-    return redirect("/");
+    return redirect(appRoutes.landing);
   }
 
   const purchase = await db.purchase.findUnique({

@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { IconBadge } from "@/components/icon-badge";
 import { formatPrice } from "@/lib/format";
+import { appRoutes } from "@/routes";
 import { CourseProgress } from "./course-progress";
 
 interface CourseCardProps {
@@ -25,7 +26,13 @@ export const CourseCard = ({
   category,
 }: CourseCardProps) => {
   return (
-    <Link href={`/explore/courses/${id}`}>
+    <Link
+      href={
+        progress !== null
+          ? appRoutes.enrolledCourse(id)
+          : appRoutes.courseDetail(id)
+      }
+    >
       <div className="group h-full overflow-hidden rounded-lg border p-3 transition hover:shadow-sm">
         <div className="relative aspect-video w-full overflow-hidden rounded-md">
           {imageUrl ? (

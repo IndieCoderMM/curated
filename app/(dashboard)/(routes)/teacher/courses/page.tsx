@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
+import { appRoutes } from "@/routes";
 import { redirect } from "next/navigation";
 import { columns } from "./_components/columns";
 import { DataTable } from "./_components/data-table";
@@ -9,7 +10,7 @@ const CoursesPage = async () => {
   const userId = session?.user?.id;
 
   if (!userId) {
-    return redirect("/");
+    return redirect(appRoutes.landing);
   }
 
   const courses = await db.course.findMany({

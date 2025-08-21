@@ -3,19 +3,20 @@
 import { BarChart, Compass, Layout, List } from "lucide-react";
 import { usePathname } from "next/navigation";
 
+import { appRoutes } from "@/routes";
 import { SidebarItem } from "./sidebar-item";
 
 const studentRoutes = [
   {
     icon: Layout,
     label: "Dashboard",
-    href: "/dashboard",
+    href: appRoutes.dashboard,
     public: false,
   },
   {
     icon: Compass,
     label: "Explore",
-    href: "/explore",
+    href: appRoutes.explore,
     public: true,
   },
 ];
@@ -24,13 +25,13 @@ const teacherRoutes = [
   {
     icon: List,
     label: "Courses",
-    href: "/teacher/courses",
+    href: appRoutes.teacherCourses,
     public: false,
   },
   {
     icon: BarChart,
     label: "Analytics",
-    href: "/teacher/analytics",
+    href: appRoutes.courseAnalytics,
     public: false,
   },
 ];

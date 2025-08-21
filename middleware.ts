@@ -13,7 +13,9 @@ export default auth((req) => {
     return null;
   }
 
-  const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+  const authPaths = Object.values(authRoutes);
+
+  const isAuthRoute = authPaths.includes(nextUrl.pathname);
   if (isAuthRoute) {
     if (isLoggedIn) {
       return Response.redirect(new URL("/", nextUrl));

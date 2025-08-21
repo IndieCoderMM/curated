@@ -19,6 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { appRoutes } from "@/routes";
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -40,7 +41,7 @@ const CreatePage = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const response = await axios.post("/api/courses", values);
-      router.push(`/teacher/courses/${response.data.id}`);
+      router.push(appRoutes.manageCourse(response.data.id));
       toast.success(`Course ${response.data.title} created`);
     } catch {
       toast.error("Error creating the course");
@@ -81,7 +82,7 @@ const CreatePage = () => {
               )}
             />
             <div className="flex items-center gap-x-2">
-              <Link href="/">
+              <Link href={appRoutes.teacherCourses}>
                 <Button type="button" variant="ghost">
                   Cancel
                 </Button>

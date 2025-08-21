@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { appRoutes } from "@/routes";
 import { redirect } from "next/navigation";
 
 const CourseIdPage = async ({
@@ -24,9 +25,9 @@ const CourseIdPage = async ({
     },
   });
 
-  if (!course) redirect("/");
+  if (!course) redirect(appRoutes.landing);
 
-  return redirect(`/courses/${course.id}/chapters/${course.chapters[0].id}`);
+  return redirect(appRoutes.chapter(course.id, course.chapters[0].id));
 };
 
 export default CourseIdPage;

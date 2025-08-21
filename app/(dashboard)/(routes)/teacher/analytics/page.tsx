@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 
 import { getAnalytics } from "@/actions/get-analytics";
 
+import { appRoutes } from "@/routes";
 import { Chart } from "./_components/chart";
 import { DataCard } from "./_components/data-card";
 
@@ -11,7 +12,7 @@ const AnalyticsPage = async () => {
   const userId = session?.user?.id;
 
   if (!userId) {
-    return redirect("/");
+    return redirect(appRoutes.landing);
   }
 
   const { data, totalRevenue, totalSales } = await getAnalytics(userId);

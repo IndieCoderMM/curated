@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import Banner from "@/components/banner";
 import { IconBadge } from "@/components/icon-badge";
 import { db } from "@/lib/db";
+import { appRoutes } from "@/routes";
 import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -22,7 +23,7 @@ const ChapterIdPage = async ({
   const session = await auth();
   const userId = session?.user?.id;
 
-  if (!userId) return redirect("/");
+  if (!userId) return redirect(appRoutes.landing);
 
   const chapter = await db.chapter.findUnique({
     where: {
@@ -31,7 +32,7 @@ const ChapterIdPage = async ({
     },
   });
 
-  if (!chapter) return redirect("/");
+  if (!chapter) return redirect(appRoutes.landing);
 
   const requiredFields = [chapter.title, chapter.description, chapter.videoUrl];
 

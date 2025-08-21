@@ -3,6 +3,7 @@ import { CheckCircle, Clock } from "lucide-react";
 import { getDashboardCourses } from "@/actions/get-dashboard-courses";
 import { auth } from "@/auth";
 import { CoursesList } from "@/components/courses-list";
+import { authRoutes } from "@/routes";
 import { redirect } from "next/navigation";
 import { InfoCard } from "./_components/info-card";
 
@@ -11,7 +12,7 @@ export default async function Dashboard() {
   const userId = session?.user?.id;
 
   if (!userId) {
-    return redirect("/login");
+    return redirect(authRoutes.login);
   }
 
   const { completedCourses, coursesInProgress } =

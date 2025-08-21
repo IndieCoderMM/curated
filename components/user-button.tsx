@@ -13,9 +13,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { appRoutes, authRoutes } from "@/routes";
 
 export function UserButton() {
-  const { data } = useSession();
+  const { data, status } = useSession();
   const user = data?.user;
 
   const name = user?.name || user?.email?.split("@")[0] || "User";
@@ -23,12 +24,14 @@ export function UserButton() {
   const initial = (name?.[0] || "U").toUpperCase();
 
   if (!user) {
+    if (status === "loading") return null;
+
     return (
       <div className="hidden items-center gap-2 sm:flex">
-        <Link href="/login">
+        <Link href={authRoutes.login}>
           <Button variant="ghost">Login</Button>
         </Link>
-        <Link href="/register">
+        <Link href={authRoutes.register}>
           <Button>Register</Button>
         </Link>
       </div>
@@ -64,7 +67,7 @@ export function UserButton() {
           {user?.email || "No email"}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <Link href="/teacher/courses">
+        <Link href={appRoutes.teacherCourses}>
           <DropdownMenuItem className="cursor-pointer">
             Manage Courses
           </DropdownMenuItem>
@@ -72,7 +75,7 @@ export function UserButton() {
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="cursor-pointer text-destructive"
-          onClick={() => signOut({ callbackUrl: "/" })}
+          onClick={() => signOut({ redirectTo: appRoutes.landing })}
         >
           Log out
         </DropdownMenuItem>

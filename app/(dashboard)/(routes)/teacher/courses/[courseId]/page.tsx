@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import Banner from "@/components/banner";
 import { IconBadge } from "@/components/icon-badge";
 import { db } from "@/lib/db";
+import { appRoutes } from "@/routes";
 import { LayoutDashboard, ListChecks } from "lucide-react";
 import { redirect } from "next/navigation";
 import { Actions } from "./_components/actions";
@@ -22,7 +23,7 @@ const CourseIdPage = async ({
   const userId = session?.user?.id;
 
   if (!userId) {
-    return redirect("/");
+    return redirect(appRoutes.landing);
   }
 
   const course = await db.course.findUnique({
@@ -47,7 +48,7 @@ const CourseIdPage = async ({
   });
 
   if (!course) {
-    return redirect("/");
+    return redirect(appRoutes.landing);
   }
 
   const requiredFields = [

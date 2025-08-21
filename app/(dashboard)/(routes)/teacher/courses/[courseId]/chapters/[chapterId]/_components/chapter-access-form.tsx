@@ -90,7 +90,7 @@ export const ChapterAccessForm = ({
           {initialData.isFree ? (
             <>Available for public.</>
           ) : (
-            <>Only available for logged in users.</>
+            <>Only available for enrolled users.</>
           )}
         </div>
       )}

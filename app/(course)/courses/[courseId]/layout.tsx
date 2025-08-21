@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { getProgress } from "@/actions/get-progress";
 import { db } from "@/lib/db";
 
+import { appRoutes } from "@/routes";
 import { CourseNavbar } from "./_components/course-navbar";
 import { CourseSidebar } from "./_components/course-sidebar";
 
@@ -40,7 +41,7 @@ const CourseLayout = async ({
     },
   });
 
-  if (!course) return redirect("/");
+  if (!course) return redirect(appRoutes.landing);
 
   const progressCount = await getProgress(userId, course.id);
 

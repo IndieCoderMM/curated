@@ -6,6 +6,7 @@ import Banner from "@/components/banner";
 import { Preview } from "@/components/preview";
 import { Separator } from "@/components/ui/separator";
 
+import { appRoutes } from "@/routes";
 import { CourseEnrollButton } from "./_components/course-enroll-button";
 import { CourseProgressButton } from "./_components/course-progress-button";
 import { VideoPlayer } from "./_components/video-player";
@@ -20,7 +21,7 @@ const ChaperIdPage = async ({
 }) => {
   const session = await auth();
   const userId = session?.user?.id;
-  if (!userId) return redirect("/");
+  if (!userId) return redirect(appRoutes.landing);
 
   const { chapter, course, nextChapter, userProgress, purchase } =
     await getChaper({
@@ -29,7 +30,7 @@ const ChaperIdPage = async ({
       chapterId: params.chapterId,
     });
 
-  if (!chapter || !course) return redirect("/");
+  if (!chapter || !course) return redirect(appRoutes.landing);
 
   const isLocked = !chapter.isFree && !purchase;
   const completeOnEnd = !!purchase && !userProgress?.isCompleted;

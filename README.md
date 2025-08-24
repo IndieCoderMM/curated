@@ -12,15 +12,13 @@
 
 <p align="center">
   <a href="https://github.com/IndiecoderMM/curated">
-    <img src="https://img.shields.io/github/last-commit/IndieCoderMM/curated" alt="Last Commit">
+    <img src="https://img.shields.io/github/last-commit/IndieCoderMM/curated" alt="Last Commit"/>
   </a>
-
   <a href="https://github.com/IndieCoderMM/curated/graphs/contributors">
-    <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat" alt="Contributors">
+    <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat" alt="Contributors"/>
   </a>
-
   <a href="https://github.com/IndieCoderMM/curated/blob/main/LICENSE">
-    <img alt="GitHub License" src="https://img.shields.io/github/license/IndieCoderMM/curated">
+    <img alt="GitHub License" src="https://img.shields.io/github/license/IndieCoderMM/curated"/>
   </a>
 </p>
 

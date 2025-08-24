@@ -10,11 +10,11 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useMemo } from "react";
+import { Suspense, useMemo } from "react";
 
 type AuthErrorType = "AccessDenied" | "Verification" | "Default" | string;
 
-export default function AuthErrorPage() {
+const AuthError = () => {
   const search = useSearchParams();
   const errorParam = (search.get("error") || "Default") as AuthErrorType;
 
@@ -76,5 +76,13 @@ export default function AuthErrorPage() {
         </CardContent>
       </Card>
     </main>
+  );
+};
+
+export default function AuthErrorPage() {
+  return (
+    <Suspense fallback={<div>Something went wrong!</div>}>
+      <AuthError />
+    </Suspense>
   );
 }

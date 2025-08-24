@@ -15,13 +15,12 @@ const AnalyticsPage = async () => {
     return redirect(appRoutes.landing);
   }
 
-  const { data, totalRevenue, totalSales } = await getAnalytics(userId);
+  const { data, totalStudents } = await getAnalytics(userId);
 
   return (
     <div className="p-6">
       <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
-        <DataCard label="Total Revenue" value={totalRevenue} shouldFormat />
-        <DataCard label="Total Sales" value={totalSales} />
+        <DataCard label="Total Students" value={totalStudents} />
       </div>
       <Chart data={data} />
     </div>

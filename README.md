@@ -72,7 +72,7 @@
    - `GITHUB_CLIENT_ID=` and `GITHUB_CLIENT_SECRET=`: Obtain these by creating an OAuth app in [GitHub Developer Settings](https://github.com/settings/developers).
    - `GOOGLE_CLIENT_ID=` and `GOOGLE_CLIENT_SECRET=`: Create credentials in the [Google Cloud Console](https://console.cloud.google.com/apis/credentials) under APIs & Services > Credentials.
    - `DATABASE_URL=`: The connection string for MongoDB
-   - `AUTH_SECRET=`: A random string used to sign auth tokens. You can generate one using [Random.org](https://www.random.org/strings/) or any secure random generator.
+   - `AUTH_SECRET=`: A random string used to sign auth tokens. You can generate one using [Random Keygen](https://randomkeygen.com) or any secure random generator.
 
 5. Start the development server:
 

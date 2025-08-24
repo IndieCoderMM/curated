@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { db } from "@/lib/db";
+import { appRoutes } from "@/routes";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -52,7 +53,7 @@ export default async function CourseOverview({ params }: PageProps) {
       {/* Breadcrumbs */}
       <div className="mb-6 flex items-center gap-2">
         <Link
-          href="/explore"
+          href={appRoutes.explore}
           className="text-sm text-primary hover:text-accent hover:underline"
         >
           Explore Courses
@@ -89,7 +90,7 @@ export default async function CourseOverview({ params }: PageProps) {
             </p>
           ) : null}
           <div className="mt-4 flex items-center">
-            <Link href={`/courses/${course.id}`}>
+            <Link href={appRoutes.enrolledCourse(course.id)}>
               <Button variant="default">Enroll Now</Button>
             </Link>
             <p className="ml-4 text-sm text-muted-foreground">

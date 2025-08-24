@@ -64,7 +64,7 @@ export const {
 
       const dbUser = await getUserById(user.id);
 
-      if (dbUser && dbUser.email && dbUser.emailVerified) {
+      if (dbUser && dbUser.email) {
         return true;
       }
 

@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { ShareButton } from "@/components/share-button";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,7 +10,6 @@ import {
 } from "@/components/ui/card";
 import { db } from "@/lib/db";
 import { appRoutes } from "@/routes";
-import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import CuratorCard from "../../_components/curator-card";
@@ -19,6 +19,9 @@ interface PageProps {
 }
 
 export default async function CourseOverview({ params }: PageProps) {
+  const session = await auth();
+  const userId = session?.user?.id ?? "public";
+
   const course = await db.course.findUnique({
     where: { id: params.id },
     include: {
@@ -48,6 +51,8 @@ export default async function CourseOverview({ params }: PageProps) {
     where: { courseId: course.id },
   });
 
+  const enrolled = enrollments.find((e) => e.userId === userId);
+
   return (
     <main className="container mx-auto max-w-5xl px-4 py-10">
       {/* Breadcrumbs */}
@@ -67,12 +72,10 @@ export default async function CourseOverview({ params }: PageProps) {
       <div className="mb-6 overflow-hidden rounded-xl border">
         <div className="relative h-60 w-full bg-muted">
           {course.imageUrl ? (
-            <Image
+            <img
               src={course.imageUrl}
               alt={course.title}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 1024px"
+              className="w-full object-cover"
             />
           ) : null}
         </div>
@@ -91,7 +94,9 @@ export default async function CourseOverview({ params }: PageProps) {
           ) : null}
           <div className="mt-4 flex items-center">
             <Link href={appRoutes.enrolledCourse(course.id)}>
-              <Button variant="default">Enroll Now</Button>
+              <Button variant="default">
+                {enrolled ? "Continue Course" : "Enroll Now"}
+              </Button>
             </Link>
             <p className="ml-4 text-sm text-muted-foreground">
               {enrollments.length} students

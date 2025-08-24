@@ -45,12 +45,17 @@ export const CourseSidebar = async ({
         <div className="flex items-center gap-2">
           <Link
             title="Back"
-            href={"/dashboard"}
+            href={appRoutes.dashboard}
             className="flex h-8 w-8 items-center justify-center rounded-full text-gray-500 transition-colors hover:bg-neutral-100 hover:text-gray-600"
           >
             <ChevronLeft className="h-5 w-5" />
           </Link>
-          <h1 className="truncate font-semibold">{course.title}</h1>
+          <Link
+            href={appRoutes.courseDetail(course.id)}
+            className="transition-colors hover:text-accent-foreground"
+          >
+            <h1 className="truncate font-semibold">{course.title}</h1>
+          </Link>
         </div>
         {purchase && (
           <div className="mt-4">

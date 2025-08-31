@@ -50,7 +50,7 @@ export default async function CourseOverview({ params }: PageProps) {
   const userId = session?.user?.id ?? "public";
 
   const course = await db.course.findUnique({
-    where: { id: params.id },
+    where: { id: params.id, isPublished: true, isActive: true },
     include: {
       chapters: {
         orderBy: { position: "asc" },

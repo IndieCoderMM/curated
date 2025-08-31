@@ -15,14 +15,14 @@ export const NavbarRoutes = () => {
   const pathname = usePathname();
 
   const isTeacherPage = pathname?.startsWith("/teacher");
-  const isCoursePage = pathname?.includes("/courses");
+  const isAdminPage = pathname?.startsWith("/admin");
   const isSearchPage = pathname === "/explore";
 
   const userId = session?.data?.user?.id;
 
   return (
     <>
-      {isTeacherPage && (
+      {(isTeacherPage || isAdminPage) && (
         <div className="">
           <Link href={appRoutes.dashboard}>
             <Button variant={"ghost"}>

@@ -67,6 +67,7 @@ model Course {
   description String? 
   imageUrl String?
   isPublished Boolean @default(false)
+  isActive   Boolean @default(true)
 
   categoryId String?
   category Category? @relation(fields: [categoryId], references: [id])

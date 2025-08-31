@@ -19,7 +19,7 @@ const CuratorCard = async ({
 }) => {
   const author = await db.user.findUnique({ where: { id: userId } });
   const courses = await db.course.findMany({
-    where: { userId, isPublished: true, id: { not: courseId } },
+    where: { userId, isPublished: true, isActive: true, id: { not: courseId } },
   });
 
   return (

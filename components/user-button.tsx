@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { appRoutes, authRoutes } from "@/routes";
 import { UserRole } from "@prisma/client";
-import { Edit, ListVideoIcon, LogOutIcon } from "lucide-react";
+import { DatabaseZapIcon, GraduationCapIcon, LogOutIcon } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -72,7 +72,7 @@ export function UserButton() {
           <>
             <Link href={appRoutes.adminUsers}>
               <DropdownMenuItem className="cursor-pointer">
-                <Edit className="mr-1 h-5 w-5 stroke-2" />
+                <DatabaseZapIcon className="mr-1 h-5 w-5 stroke-2" />
                 Admin Dashboard
               </DropdownMenuItem>
             </Link>
@@ -81,7 +81,7 @@ export function UserButton() {
         )}
         <Link href={appRoutes.teacherCourses}>
           <DropdownMenuItem className="cursor-pointer">
-            <ListVideoIcon className="mr-1 h-5 w-5 stroke-2" />
+            <GraduationCapIcon className="mr-1 h-5 w-5 stroke-2" />
             Manage Courses
           </DropdownMenuItem>
         </Link>

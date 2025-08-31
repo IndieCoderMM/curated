@@ -8,11 +8,38 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { getMetadata } from "@/config/meta";
 import { db } from "@/lib/db";
+import { getCourseMetadata } from "@/lib/queries";
 import { appRoutes } from "@/routes";
+import { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import CuratorCard from "../../_components/curator-card";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string | string[] }>;
+}): Promise<Metadata> {
+  const routeParams = await params;
+  const id = Array.isArray(routeParams.id)
+    ? routeParams.id.join("/")
+    : routeParams.id || "";
+
+  const course = await getCourseMetadata({ id });
+
+  if (!course?.title)
+    return {
+      title: "Course Not Found",
+    };
+
+  return getMetadata({
+    title: `${course.title} | CuratED`,
+    description: course.description ?? "",
+    image: `/api/og?course=${course.id}`,
+  });
+}
 
 interface PageProps {
   params: { id: string };

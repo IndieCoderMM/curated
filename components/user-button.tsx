@@ -1,9 +1,5 @@
 "use client";
 
-import { signOut, useSession } from "next-auth/react";
-import Image from "next/image";
-import Link from "next/link";
-
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -14,6 +10,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { appRoutes, authRoutes } from "@/routes";
+import { UserRole } from "@prisma/client";
+import { Edit, ListVideoIcon, LogOutIcon } from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
 
 export function UserButton() {
   const { data, status } = useSession();
@@ -63,12 +64,24 @@ export function UserButton() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel className="truncate">
+        <DropdownMenuLabel className="truncate font-normal">
           {user?.email || "No email"}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        {user?.role === UserRole.ADMIN && (
+          <>
+            <Link href={appRoutes.adminUsers}>
+              <DropdownMenuItem className="cursor-pointer">
+                <Edit className="mr-1 h-5 w-5 stroke-2" />
+                Admin Dashboard
+              </DropdownMenuItem>
+            </Link>
+            <DropdownMenuSeparator />
+          </>
+        )}
         <Link href={appRoutes.teacherCourses}>
           <DropdownMenuItem className="cursor-pointer">
+            <ListVideoIcon className="mr-1 h-5 w-5 stroke-2" />
             Manage Courses
           </DropdownMenuItem>
         </Link>
@@ -77,6 +90,7 @@ export function UserButton() {
           className="cursor-pointer text-destructive"
           onClick={() => signOut({ redirectTo: appRoutes.landing })}
         >
+          <LogOutIcon className="mr-1 h-5 w-5 stroke-2" />
           Log out
         </DropdownMenuItem>
       </DropdownMenuContent>

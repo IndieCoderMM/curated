@@ -1,12 +1,37 @@
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
-
 import { getProgress } from "@/actions/get-progress";
+import { auth } from "@/auth";
+import { getMetadata } from "@/config/meta";
 import { db } from "@/lib/db";
-
+import { getCourseMetadata } from "@/lib/queries";
 import { appRoutes } from "@/routes";
+import { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { CourseNavbar } from "./_components/course-navbar";
 import { CourseSidebar } from "./_components/course-sidebar";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ courseId: string | string[] }>;
+}): Promise<Metadata> {
+  const routeParams = await params;
+  const id = Array.isArray(routeParams.courseId)
+    ? routeParams.courseId.join("/")
+    : routeParams.courseId || "";
+
+  const course = await getCourseMetadata({ id });
+
+  if (!course?.title)
+    return {
+      title: "CuratED",
+    };
+
+  return getMetadata({
+    title: `${course.title} | CuratED`,
+    description: course.description ?? "",
+    image: `/api/og?course=${course.id}`,
+  });
+}
 
 const CourseLayout = async ({
   children,

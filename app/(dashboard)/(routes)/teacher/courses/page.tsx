@@ -18,11 +18,7 @@ const CoursesPage = async () => {
       userId,
     },
     include: {
-      purchases: {
-        where: {
-          userId,
-        },
-      },
+      purchases: true,
     },
     orderBy: {
       createdAt: "desc",

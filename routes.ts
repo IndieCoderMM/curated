@@ -10,6 +10,8 @@ export const appRoutes = {
   landing: "/",
   dashboard: "/dashboard",
   explore: "/explore",
+  adminUsers: "/admin/users",
+  adminCourses: "/admin/courses",
   teacherCourses: "/teacher/courses",
   createCourse: "/teacher/create",
   courseAnalytics: "/teacher/analytics",

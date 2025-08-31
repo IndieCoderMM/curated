@@ -1,4 +1,5 @@
-import { db } from "@/lib/db";
+import { getFirstIncompleteChapter } from "@/actions/get-first-incomplete-chapter";
+import { auth } from "@/auth";
 import { appRoutes } from "@/routes";
 import { redirect } from "next/navigation";
 
@@ -9,25 +10,17 @@ const CourseIdPage = async ({
     courseId: string;
   };
 }) => {
-  const course = await db.course.findUnique({
-    where: {
-      id: params.courseId,
-    },
-    include: {
-      chapters: {
-        where: {
-          isPublished: true,
-        },
-        orderBy: {
-          position: "asc",
-        },
-      },
-    },
+  const session = await auth();
+  const userId = session?.user?.id ?? null;
+
+  const firstChapterId = await getFirstIncompleteChapter({
+    courseId: params.courseId,
+    userId,
   });
 
-  if (!course) redirect(appRoutes.landing);
+  if (!firstChapterId) return redirect(appRoutes.landing);
 
-  return redirect(appRoutes.chapter(course.id, course.chapters[0].id));
+  return redirect(appRoutes.chapter(params.courseId, firstChapterId));
 };
 
 export default CourseIdPage;

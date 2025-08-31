@@ -1,11 +1,15 @@
-import { auth } from "@/auth";
-
 import { getCourses } from "@/actions/get-courses";
+import { auth } from "@/auth";
 import { CoursesList } from "@/components/courses-list";
 import { SearchInput } from "@/components/search-input";
-
+import { getMetadata, metaTexts } from "@/config/meta";
 import { db } from "@/lib/db";
 import { Categories } from "./_components/categories";
+
+export const metadata = getMetadata({
+  title: metaTexts.explore.title,
+  description: metaTexts.explore.description,
+});
 
 interface SearchPageProps {
   searchParams: {

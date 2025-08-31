@@ -1,6 +1,12 @@
 "use client";
 
-import { BarChart, Compass, Layout, List } from "lucide-react";
+import {
+  BarChart,
+  Compass,
+  Layout,
+  ListVideoIcon,
+  Users2Icon,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { appRoutes } from "@/routes";
@@ -23,7 +29,7 @@ const studentRoutes = [
 
 const teacherRoutes = [
   {
-    icon: List,
+    icon: ListVideoIcon,
     label: "Courses",
     href: appRoutes.teacherCourses,
     public: false,
@@ -36,12 +42,32 @@ const teacherRoutes = [
   },
 ];
 
+const adminRoutes = [
+  {
+    icon: Users2Icon,
+    label: "Users",
+    href: appRoutes.adminUsers,
+    public: false,
+  },
+  {
+    icon: ListVideoIcon,
+    label: "Courses",
+    href: appRoutes.adminCourses,
+    public: false,
+  },
+];
+
 export const SidebarRoutes = ({ isLogin }: { isLogin?: boolean }) => {
   const pathname = usePathname();
 
   const isTeacherPage = pathname?.includes("/teacher");
+  const isAdminPage = pathname?.includes("/admin");
 
-  const routes = isTeacherPage ? teacherRoutes : studentRoutes;
+  const routes = isAdminPage
+    ? adminRoutes
+    : isTeacherPage
+      ? teacherRoutes
+      : studentRoutes;
 
   const filteredRoutes = routes.filter((route) => {
     if (route.public) return true;

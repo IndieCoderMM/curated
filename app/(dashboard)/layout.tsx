@@ -1,6 +1,12 @@
 import { auth } from "@/auth";
+import { getMetadata, metaTexts } from "@/config/meta";
 import { Navbar } from "./_components/navbar";
 import { Sidebar } from "./_components/sidebar";
+
+export const metadata = getMetadata({
+  title: metaTexts.dashboard.title,
+  description: metaTexts.dashboard.description,
+});
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await auth();

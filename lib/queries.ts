@@ -25,3 +25,14 @@ export const generateVerificationToken = async (email: string) => {
     },
   });
 };
+
+export const getCourseMetadata = async ({ id }: { id: string }) => {
+  return db.course.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      title: true,
+      description: true,
+    },
+  });
+};

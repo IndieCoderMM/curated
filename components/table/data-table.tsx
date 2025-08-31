@@ -25,24 +25,21 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { appRoutes } from "@/routes";
-import { PlusCircle } from "lucide-react";
-import Link from "next/link";
-
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  searchColumn?: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  searchColumn,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
   );
-
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
 
@@ -55,47 +52,41 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
-    state: {
-      sorting,
-      columnFilters,
-    },
+    onColumnVisibilityChange: setColumnVisibility,
+    state: { sorting, columnFilters, columnVisibility },
   });
 
   return (
-    <div className="">
+    <div>
       <div className="flex items-center justify-between py-4">
-        <Input
-          placeholder="Search by title..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-        <Link href={appRoutes.createCourse}>
-          <Button variant="default">
-            <PlusCircle className="mr-2 h-4 w-4" />
-            Add Course
-          </Button>
-        </Link>
+        {searchColumn && (
+          <Input
+            placeholder={`Search by ${searchColumn}...`}
+            value={
+              (table.getColumn(searchColumn)?.getFilterValue() as string) ?? ""
+            }
+            onChange={(e) =>
+              table.getColumn(searchColumn)?.setFilterValue(e.target.value)
+            }
+            className="max-w-sm"
+          />
+        )}
       </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id} align="left">
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
-                    </TableHead>
-                  );
-                })}
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id} align="left">
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>

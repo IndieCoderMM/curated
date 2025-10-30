@@ -12,6 +12,7 @@ export const appRoutes = {
   explore: "/explore",
   adminUsers: "/admin/users",
   adminCourses: "/admin/courses",
+  adminCategories: "/admin/categories",
   teacherCourses: "/teacher/courses",
   createCourse: "/teacher/create",
   courseAnalytics: "/teacher/analytics",

@@ -3,6 +3,7 @@
 import {
   BarChart,
   Compass,
+  FolderOpen,
   Layout,
   ListVideoIcon,
   Users2Icon,
@@ -53,6 +54,12 @@ const adminRoutes = [
     icon: ListVideoIcon,
     label: "Courses",
     href: appRoutes.adminCourses,
+    public: false,
+  },
+  {
+    icon: FolderOpen,
+    label: "Categories",
+    href: appRoutes.adminCategories,
     public: false,
   },
 ];

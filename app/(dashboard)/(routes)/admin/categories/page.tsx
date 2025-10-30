@@ -16,13 +16,15 @@ const AdminCategoriesPage = async () => {
   });
 
   const data = categories.map((c) => ({
-    ...c,
+    id: c.id,
+    name: c.name,
     totalCourses: c.courses.length,
+    createdAt: c.createdAt,
   }));
 
   return (
     <div className="p-6">
-      <AdminCategoriesTable data={data as any} />
+      <AdminCategoriesTable data={data} />
     </div>
   );
 };

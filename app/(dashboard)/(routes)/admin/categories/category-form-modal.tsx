@@ -10,7 +10,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 interface CategoryFormModalProps {
@@ -28,6 +28,11 @@ export function CategoryFormModal({
 }: CategoryFormModalProps) {
   const [name, setName] = useState(category?.name || "");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Update name when category prop changes
+  useEffect(() => {
+    setName(category?.name || "");
+  }, [category]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
